@@ -1,0 +1,48 @@
+{
+  "name": "tepco2mqtt",
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "includedScripts": [],
+  "sourceRoot": "src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/tepco2mqtt",
+        "format": ["esm"],
+        "additionalEntryPoints": ["src/bin/tepco2mqtt.ts"],
+        "main": "src/main.ts",
+        "packages": "external",
+        "tsConfig": "tsconfig.app.json",
+        "generatePackageJson": true,
+        "assets": [".hash", "LICENSE", "README.md"],
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".mjs"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "generateLockfile": true,
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".mjs"
+            }
+          }
+        }
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f Dockerfile . -t tepco-scraper"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "name": "Tepco2MQTT",
+  "version": "1.0.0",
+  "slug": "tepco2mqtt",
+  "description": "Tepco2MQTT is a Home Assistant add-on that automates data extraction from the TEPCO (Tokyo Electric Power Company) website using a headless Chromium browser. It seamlessly navigates the website, retrieves essential data, and publishes it to an MQTT broker, enabling easy integration with your Home Assistant setup.",
+  "url": "https://github.com/aurimasniekis/hassio-tepco2mqtt",
+  "startup": "application",
+  "services": [
+    "mqtt:need"
+  ],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armhf",
+    "armv7",
+    "i386"
+  ],
+  "boot": "auto",
+  "init": false,
+  "timeout": 30,
+  "map": [
+    {
+      "type": "share",
+      "read_only": false
+    },
+    {
+      "type": "homeassistant_config",
+      "read_only": false,
+      "path": "/config"
+    },
+    {
+      "type": "addon_config",
+      "read_only": false,
+      "path": "/addon_config"
+    }
+  ],
+  "options": {
+    "data_path": "/config/tepco2mqtt",
+    "browser": {
+      "interval": 300,
+      "timeout": 300
+    },
+    "tepco": {
+      "initialRun": true,
+      "interval": 300,
+      "maxErrorCount": 10
+    },
+    "mqtt": {}
+  },
+  "schema": {
+    "data_path": "str",
+    "browser": {
+      "interval": "int(1,)?",
+      "timeout": "int(1,)?"
+    },
+    "tepco": {
+      "interval": "int(1,)?",
+      "email": "str",
+      "password": "str",
+      "initialRun": "bool",
+      "maxErrorCount": "int(0,)?"
+    },
+    "mqtt": {
+      "server": "str?",
+      "ca": "str?",
+      "key": "str?",
+      "cert": "str?",
+      "username": "str?",
+      "password": "str?",
+      "base_topic": "str?"
+    },
+    "watchdog": "str?"
+  }
+}

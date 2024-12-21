@@ -1,0 +1,5 @@
+{
+  "name": "Home Assistant Add-on: Tepco2MQTT",
+  "url": "https://github.com/aurimasniekis/hassio-tepco2mqtt",
+  "maintainer": "Aurimas Niekis <aurimas@niekis.lt>"
+}

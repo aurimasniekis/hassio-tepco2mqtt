@@ -1,0 +1,457 @@
+{
+  "type": "object",
+  "properties": {
+    "homeassistant": {
+      "title": "Home Assistant integration",
+      "requiresRestart": true,
+      "description": "Home Assistant integration (MQTT discovery)",
+      "default": false,
+      "oneOf": [
+        {
+          "type": "boolean",
+          "title": "Home Assistant (simple)"
+        },
+        {
+          "type": "object",
+          "title": "Home Assistant (advanced)",
+          "properties": {
+            "discovery_topic": {
+              "type": "string",
+              "title": "Homeassistant discovery topic",
+              "description": "Home Assistant discovery topic",
+              "requiresRestart": true,
+              "examples": [
+                "homeassistant"
+              ]
+            },
+            "status_topic": {
+              "type": "string",
+              "title": "Home Assistant status topic",
+              "description": "Home Assistant status topic",
+              "requiresRestart": true,
+              "examples": [
+                "homeassistant/status"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "browser": {
+      "type": "object",
+      "title": "Browsew",
+      "properties": {
+        "userDataDir": {
+          "type": "string",
+          "title": "Chromium userDataDir",
+          "requiresRestart": true,
+          "description": "Chromium userDataDir path",
+          "examples": [
+            "data/chromium"
+          ]
+        },
+        "headless": {
+          "type": "boolean",
+          "title": "Headless",
+          "default": false,
+          "requiresRestart": true,
+          "description": "Run Chromium in headless"
+        },
+        "executablePath": {
+          "type": "string",
+          "title": "Executable Path",
+          "requiresRestart": true,
+          "description": "Path to Chromium executable"
+        },
+        "interval": {
+          "type": "number",
+          "title": "Interval",
+          "default": 300,
+          "requiresRestart": true,
+          "description": "Interval in seconds in which should reload the page"
+        },
+        "timeout": {
+          "type": "number",
+          "title": "Timeout",
+          "default": 300,
+          "requiresRestart": true,
+          "description": "Timeout in seconds in which consider page loading failed"
+        },
+        "additionalArgs": {
+          "type": "array",
+          "title": "Additional Arguments",
+          "items": {
+            "type": "string"
+          },
+          "requiresRestart": true,
+          "description": "Additional arguments to pass to the chromium"
+        }
+      }
+    },
+    "tepco": {
+      "type": "object",
+      "title": "Tepco",
+      "properties": {
+        "interval": {
+          "type": "number",
+          "title": "Interval",
+          "default": 300,
+          "requiresRestart": true,
+          "description": "Interval in seconds in which should reload values"
+        },
+        "maxErrorCount": {
+          "type": "number",
+          "title": "Maximum Error Count",
+          "default": 10,
+          "requiresRestart": true,
+          "description": "Maximum error count after which exit T2M"
+        },
+        "email": {
+          "type": "string",
+          "title": "Email Address",
+          "requiresRestart": true
+        },
+        "password": {
+          "type": "string",
+          "title": "Password",
+          "requiresRestart": true
+        },
+        "initialRun": {
+          "type": "boolean",
+          "title": "Initial Run",
+          "default": true,
+          "requiresRestart": true,
+          "description": "First run of the Tepco2MQTT, will login check account details and print out contracts to track"
+        },
+        "contractIds": {
+          "type": "array",
+          "title": "Contract Numbers",
+          "items": {
+            "type": "string"
+          },
+          "description": "The list of contract numbers to track. (Obtained from first run)"
+        }
+      },
+      "required": ["email", "password"]
+    },
+    "mqtt": {
+      "type": "object",
+      "title": "MQTT",
+      "properties": {
+        "base_topic": {
+          "type": "string",
+          "title": "Base topic",
+          "default": "tepco2mqtt",
+          "requiresRestart": true,
+          "description": "MQTT base topic for Tepco2MQTT MQTT messages",
+          "examples": [
+            "tepco2mqtt"
+          ]
+        },
+        "server": {
+          "type": "string",
+          "title": "MQTT server",
+          "requiresRestart": true,
+          "description": "MQTT server URL (use mqtts:// for SSL/TLS connection)",
+          "examples": [
+            "mqtt://localhost:1883"
+          ]
+        },
+        "keepalive": {
+          "type": "number",
+          "title": "Keepalive",
+          "requiresRestart": true,
+          "description": "MQTT keepalive in second",
+          "default": 60
+        },
+        "ca": {
+          "type": "string",
+          "title": "Certificate authority",
+          "requiresRestart": true,
+          "description": "Absolute path to SSL/TLS certificate of CA used to sign server and client certificates",
+          "examples": [
+            "/etc/ssl/mqtt-ca.crt"
+          ]
+        },
+        "key": {
+          "type": "string",
+          "title": "SSL/TLS key",
+          "requiresRestart": true,
+          "description": "Absolute path to SSL/TLS key for client-authentication",
+          "examples": [
+            "/etc/ssl/mqtt-client.key"
+          ]
+        },
+        "cert": {
+          "type": "string",
+          "title": "SSL/TLS certificate",
+          "description": "Absolute path to SSL/TLS certificate for client-authentication",
+          "requiresRestart": true,
+          "examples": [
+            "/etc/ssl/mqtt-client.crt"
+          ]
+        },
+        "username": {
+          "type": "string",
+          "title": "Username",
+          "requiresRestart": true,
+          "description": "MQTT server authentication username",
+          "examples": [
+            "johnnysilverhand"
+          ]
+        },
+        "password": {
+          "type": "string",
+          "title": "Password",
+          "requiresRestart": true,
+          "description": "MQTT server authentication password",
+          "examples": [
+            "ILOVEPELMENI"
+          ]
+        },
+        "client_id": {
+          "type": "string",
+          "title": "Client ID",
+          "requiresRestart": true,
+          "description": "MQTT client ID",
+          "examples": [
+            "MY_CLIENT_ID"
+          ]
+        },
+        "reject_unauthorized": {
+          "type": "boolean",
+          "title": "Reject unauthorized",
+          "requiresRestart": true,
+          "description": "Disable self-signed SSL certificate",
+          "default": true
+        },
+        "include_device_information": {
+          "type": "boolean",
+          "title": "Include device information",
+          "description": "Include device information to mqtt messages",
+          "default": false
+        },
+        "version": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Version",
+          "requiresRestart": true,
+          "description": "MQTT protocol version",
+          "default": 4,
+          "examples": [
+            5
+          ]
+        },
+        "force_disable_retain": {
+          "type": "boolean",
+          "title": "Force disable retain",
+          "requiresRestart": true,
+          "description": "Disable retain for all send messages. ONLY enable if you MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration",
+          "default": false
+        }
+      },
+      "required": [
+        "server"
+      ]
+    },
+    "advanced": {
+      "type": "object",
+      "title": "Advanced",
+      "properties": {
+        "log_rotation": {
+          "type": "boolean",
+          "title": "Log rotation",
+          "requiresRestart": true,
+          "description": "Log rotation",
+          "default": true
+        },
+        "log_symlink_current": {
+          "type": "boolean",
+          "title": "Log symlink current",
+          "requiresRestart": true,
+          "description": "Create symlink to current logs in the log directory",
+          "default": false
+        },
+        "log_output": {
+          "type": "array",
+          "requiresRestart": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "console",
+              "file",
+              "syslog"
+            ]
+          },
+          "title": "Log output",
+          "description": "Output location of the log, leave empty to suppress logging"
+        },
+        "log_directory": {
+          "type": "string",
+          "title": "Log directory",
+          "requiresRestart": true,
+          "description": "Location of log directory",
+          "examples": [
+            "data/log/%TIMESTAMP%"
+          ]
+        },
+        "log_file": {
+          "type": "string",
+          "title": "Log file",
+          "requiresRestart": true,
+          "description": "Log file name, can also contain timestamp",
+          "examples": [
+            "tepco2mqtt_%TIMESTAMP%.log"
+          ],
+          "default": "log.txt"
+        },
+        "log_level": {
+          "type": "string",
+          "enum": [
+            "error",
+            "warning",
+            "info",
+            "debug",
+            "warn"
+          ],
+          "title": "Log level",
+          "description": "Logging level",
+          "default": "info"
+        },
+        "log_namespaced_levels": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^(z2m|zhc|zh)(:[a-z0-9]{1,})*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info",
+              "debug"
+            ]
+          },
+          "title": "Log Namespaced Levels",
+          "description": "Set individual log levels for certain namespaces",
+          "default": {},
+          "examples": [
+            {
+              "t2m:mqtt": "warning"
+            }
+          ]
+        },
+        "log_syslog": {
+          "requiresRestart": true,
+          "oneOf": [
+            {
+              "title": "syslog (disabled)",
+              "type": "null"
+            },
+            {
+              "title": "syslog (enabled)",
+              "type": "object",
+              "properties": {
+                "host": {
+                  "type": "string",
+                  "title": "Host",
+                  "description": "The host running syslogd, defaults to localhost.",
+                  "default": "localhost"
+                },
+                "port": {
+                  "type": "number",
+                  "title": "Port",
+                  "description": "The port on the host that syslog is running on, defaults to syslogd's default port.",
+                  "default": 514
+                },
+                "protocol": {
+                  "type": "string",
+                  "title": "Protocol",
+                  "description": "The network protocol to log over (e.g. tcp4, udp4, tls4, unix, unix-connect, etc).",
+                  "default": "udp4",
+                  "examples": [
+                    "udp4",
+                    "tls4",
+                    "unix",
+                    "unix-connect"
+                  ]
+                },
+                "path": {
+                  "type": "string",
+                  "title": "Path",
+                  "description": "The path to the syslog dgram socket (i.e. /dev/log or /var/run/syslog for OS X).",
+                  "default": "/dev/log",
+                  "examples": [
+                    "/var/run/syslog"
+                  ]
+                },
+                "pid": {
+                  "type": "string",
+                  "title": "PID",
+                  "description": "PID of the process that log messages are coming from (Default process.pid).",
+                  "default": "process.pid"
+                },
+                "localhost": {
+                  "type": "string",
+                  "title": "Localhost",
+                  "description": "Host to indicate that log messages are coming from (Default: localhost).",
+                  "default": "localhost"
+                },
+                "type": {
+                  "type": "string",
+                  "title": "Type",
+                  "description": "The type of the syslog protocol to use (Default: BSD, also valid: 5424).",
+                  "default": "5424"
+                },
+                "app_name": {
+                  "type": "string",
+                  "title": "Localhost",
+                  "description": "The name of the application (Default: Tepco2MQTT).",
+                  "default": "Tepco2MQTT"
+                },
+                "eol": {
+                  "type": "string",
+                  "title": "eol",
+                  "description": "The end of line character to be added to the end of the message (Default: Message without modifications).",
+                  "default": "/n"
+                }
+              }
+            }
+          ]
+        },
+        "timestamp_format": {
+          "type": "string",
+          "title": "Timestamp format",
+          "requiresRestart": true,
+          "description": "Log timestamp format",
+          "examples": [
+            "YYYY-MM-DD HH:mm:ss"
+          ]
+        },
+        "homeassistant_discovery_topic": {
+          "type": "string",
+          "title": "Homeassistant discovery topic",
+          "description": "Home Assistant discovery topic",
+          "requiresRestart": true,
+          "examples": [
+            "homeassistant"
+          ]
+        },
+        "homeassistant_status_topic": {
+          "type": "string",
+          "title": "Home Assistant status topic",
+          "description": "Home Assistant status topic",
+          "requiresRestart": true,
+          "examples": [
+            "homeassistant/status"
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "mqtt", "tepco"
+  ]
+}
